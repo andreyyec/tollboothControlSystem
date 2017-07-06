@@ -1,0 +1,32 @@
+{
+  "name": "tollbooth_control_system",
+  "version": "1.0.0",
+  "description": "NodeJS - Raspberry Pi TollBoth Counter",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreyyec/tollboothControlSystem.git"
+  },
+  "keywords": [
+    "raspberry",
+    "raspberrypi",
+    "node",
+    "nodejs",
+    "tollbooth"
+  ],
+  "author": "Andrey Castro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreyyec/tollboothControlSystem/issues"
+  },
+  "homepage": "https://github.com/andreyyec/tollboothControlSystem#readme",
+  "dependencies": {
+    "onoff": "^1.1.3",
+    "pi-servo": "^1.0.2",
+    "request": "^2.81.0"
+  }
+}
