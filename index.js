@@ -1,8 +1,20 @@
 console.log('Executing npm start');
 
 const Gpio = require('onoff').Gpio,
-    pSensor = new Gpio(4, 'in'),
-    pButton = new Gpio(17, 'in');
+    piGpio = require('pigpio').Gpio,
+    sMotor = new piGpio(18, {mode: Gpio.OUTPUT}),
+    PiServo = require('pi-servo'),
+    pServo = new PiServo(18),
+    pSensorIn = new Gpio(4, 'in'),
+    pSensorOut = new Gpio (22, 'in'),
+    pButton = new Gpio(17, 'in'),
+    stopLed = new Gpio(20, 'out'),
+    goLed = new Gpio(21, 'out')
+    closeCoordenate = 650,
+    openCoordenate = 1600,
+    pSensorOutActivated = false,
+    isOpen = false;
+
 
 let iv, self;
 
@@ -26,24 +38,70 @@ class TollBoothController {
     }
 
     exitHandler(options, err) {
-        if (options.cleanup) console.log('clean');
+        console.log('Raspi pins clean up');
         if (err) console.log(err.stack);
         if (options.exit) process.exit();
 
-        pSensor.unexport();
+        pSensorIn.unexport();
+        pSensorOut.unexport();
+        stopLed.writeSync(0);
+        goLed.writeSync(0);
         pButton.unexport();
 	clearInterval(iv);
     }
 
+    toggleIndicatorLeds() {
+        if(isOpen) {
+            goLed.writeSync(1);
+            stopLed.writeSync(0);
+        } else {
+            goLed.writeSync(0);
+            stopLed.writeSync(1);
+        }
+    }
+
+    toggleServoPosition() {
+        if(isOpen) {
+            sMotor.servoWrite(openCoordenate);
+        } else {
+            sMotor.servoWrite(closeCoordenate);
+        }
+    }
+
+    toggleGate() {
+        self.toggleIndicatorLeds();
+        self.toggleServoPosition();
+    }
+
+    isVehiclePresent(sensor) {
+        return !sensor.readSync();
+    }
+
+    tollboothCheckup() {
+        if(self.isVehiclePresent(pSensorIn) && !isOpen && pButton.readSync()) {
+            isOpen = true;
+            self.toggleGate();
+        } else if(isOpen && self.isVehiclePresent(pSensorOut)) {
+            pSensorOutActivated = true;
+        } else if(isOpen && pSensorOutActivated === true && !self.isVehiclePresent(pSensorOut)) {
+            isOpen = false;
+            pSensorOutActivated = false;
+            self.toggleGate();
+        }
+    }
+
     setup() {
         //Settings to load before the loop execution
+        sMotor.servoWrite(closeCoordenate);
+        stopLed.writeSync(1);
         iv = setInterval(self.loop, 100);
     }
 
     loop() {
         //Loop execution
-        console.log('Sensor Value: '+pSensor.readSync());
         console.log('Button Value: '+pButton.readSync());
+        console.log('Is Vehicle?: '+ self.isVehiclePresent(pSensorIn));
+        self.tollboothCheckup();
     }
 }
 
