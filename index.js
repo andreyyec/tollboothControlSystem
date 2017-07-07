@@ -86,7 +86,7 @@ class TollBoothController {
         } else if(isOpen && pSensorOutActivated === true && !self.isVehiclePresent(pSensorOut)) {
             isOpen = false;
             pSensorOutActivated = false;
-            self.toggleGate();
+            setTimeout(self.toggleGate, 1000);
         }
     }
 
@@ -99,8 +99,8 @@ class TollBoothController {
 
     loop() {
         //Loop execution
-        console.log('Button Value: '+pButton.readSync());
-        console.log('Is Vehicle?: '+ self.isVehiclePresent(pSensorIn));
+        //console.log('Button Value: '+pButton.readSync());
+        //console.log('Is Vehicle?: '+ self.isVehiclePresent(pSensorIn));
         self.tollboothCheckup();
     }
 }
