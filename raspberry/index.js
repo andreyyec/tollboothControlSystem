@@ -42,9 +42,9 @@ class TollBoothController {
 
         pSensorIn.unexport();
         pSensorOut.unexport();
+        pButton.unexport();
         stopLed.writeSync(0);
         goLed.writeSync(0);
-        pButton.unexport();
         clearInterval(iv);
     }
 
@@ -101,8 +101,6 @@ class TollBoothController {
 
     loop() {
         //Loop execution
-        //console.log('Button Value: '+pButton.readSync());
-        //console.log('Is Vehicle?: '+ self.isVehiclePresent(pSensorIn));
         self.tollboothCheckup();
     }
 }
