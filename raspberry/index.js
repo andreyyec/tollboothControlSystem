@@ -3,8 +3,6 @@ console.log('Executing npm start');
 const Gpio = require('onoff').Gpio,
     piGpio = require('pigpio').Gpio,
     sMotor = new piGpio(18, {mode: Gpio.OUTPUT}),
-    PiServo = require('pi-servo'),
-    pServo = new PiServo(18),
     pSensorIn = new Gpio(4, 'in'),
     pSensorOut = new Gpio (22, 'in'),
     pButton = new Gpio(17, 'in'),
