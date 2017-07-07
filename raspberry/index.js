@@ -66,9 +66,13 @@ class TollBoothController {
         }
     }
 
-    toggleGate() {
+    toggleGate(delay = false) {
         self.toggleIndicatorLeds();
-        self.toggleServoPosition();
+        if (!delay) {
+            self.toggleServoPosition();    
+        } else{
+            setTimeout(self.toggleServoPosition, 1000);
+        }
     }
 
     isVehiclePresent(sensor) {
@@ -84,7 +88,7 @@ class TollBoothController {
         } else if(isOpen && pSensorOutActivated === true && !self.isVehiclePresent(pSensorOut)) {
             isOpen = false;
             pSensorOutActivated = false;
-            setTimeout(self.toggleGate, 1000);
+            self.toggleGate(true);
         }
     }
 
