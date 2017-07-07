@@ -45,7 +45,7 @@ class TollBoothController {
         stopLed.writeSync(0);
         goLed.writeSync(0);
         pButton.unexport();
-	clearInterval(iv);
+        clearInterval(iv);
     }
 
     toggleIndicatorLeds() {
