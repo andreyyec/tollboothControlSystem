@@ -2,4 +2,37 @@
 
 <%- contentFor('body') %>
 
-<h1>Here goes settings content</h1>
+<div class="content-container settings">
+	<div class="row">
+		<div class="page-header">
+		    <h3>TollBooth Fare</h3>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+		        <label>Current tollboth Fare</label>
+		        <input class="form-control">
+		        <button type="button" class="btn btn-sm btn-success pull-right update-fare">Update</button>
+		    </div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="page-header">
+			    <h3>Users administration</h3>
+			</div>
+		</div>
+
+		<div class="col-xs-12">
+			<table id="example" class="display" cellspacing="0" width="100%">
+		        <thead>
+		            <tr>
+		                <th>Name</th>
+		                <th>Username</th>
+		                <th>State</th>
+		            </tr>
+		        </thead>
+		    </table>
+	    </div>
+	</div>
+</div>

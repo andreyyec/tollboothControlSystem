@@ -1,8 +1,9 @@
-const 	express = require('express'),
+const	express = require('express'),
 		expressLayouts = require('express-ejs-layouts'),
 		app = express(),
-		io = require('socket.io')(app),
-		MongoClient = require('mongodb').MongoClient,
+		http = require('http').Server(app),
+		io = require('socket.io')(http),
+		port = process.env.PORT || 3000,
 		dbMng = require('./scripts/dbManager.js');
 
 //DB manager settings
@@ -16,10 +17,6 @@ app.set('layout extractStyles', true)
 
 app.use(expressLayouts);
 app.use('/public', express.static('public'));
-
-app.listen(3000, (req, res) => {
-    console.log('listening on 3000')
-});
 
 app.get('/', (req, res) => {
 	let records = dbManager.getTrafficRecordsCount();
@@ -52,4 +49,15 @@ app.get('*', function(req, res){
 	 	mainTitle: '',
 		subTitle: '',
   	});
+});
+
+io.on('connection', function(socket){
+  socket.on('mensaje', function(msg){
+  	console.log(msg);
+    io.emit('alertar', msg);
+  });
+});
+
+http.listen(port, function(){
+  console.log('listening on *:' + port);
 });
