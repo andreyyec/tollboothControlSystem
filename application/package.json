@@ -32,6 +32,7 @@
     "mongodb": "^2.2.25"
   },
   "dependencies": {
-      "socket.io": "^1.7.3"
+    "body-parser": "^1.17.2",
+    "socket.io": "^1.7.3"
   }
 }

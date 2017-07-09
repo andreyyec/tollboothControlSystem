@@ -54,16 +54,7 @@
     }
 }*/
 
-const 	querystring = require('querystring'),
-		http = require('http'),
-		request = require('request'),
-		connectionSettings = {
-		    host: 'localhost',
-		    port: 3000,
-		    path: '/rest/addrecord',
-		    method: 'POST'
-		};
-
+const request = require('request');
 
 class Test {
 
@@ -71,37 +62,8 @@ class Test {
 		this.sendData();
 	}
 
-	/*sendData() {
-		let req,
-			currentTime = new Date(),
-			data = querystring.stringify({
-		      time: currentTime
-		    });
-
-		connectionSettings.body = querystring.stringify({
-	      	time: currentTime
-	    });
-
-		connectionSettings.headers = {
-	        'Content-Type': 'application/x-www-form-urlencoded',
-	        'Content-Length': Buffer.byteLength(data)
-	    };
-		
-		req = http.request(connectionSettings, function(res) {
-		    res.setEncoding('utf8');
-		    res.on('data', function (chunk) {
-		        console.log("body: " + chunk);
-			});
-		});
-		
-		req.write(data);	
-		req.end();
-	}*/
-
-	/*sendData() {
-		request.post(
-		    'http://localhost:3000/rest/addrecord',
-		    { json: { key: 'value' } },
+	sendData() {
+		request.post('http://localhost:3000/rest/addrecord', { json: { key: 'value' } },
 		    function (error, response, body) {
 		    	console.log(body);
 		        if (!error && response.statusCode == 200) {
@@ -109,7 +71,7 @@ class Test {
 		        }
 		    }
 		);
-	}*/
+	}
 }
 
 new Test();

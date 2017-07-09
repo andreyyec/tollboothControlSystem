@@ -1,6 +1,7 @@
 const	express = require('express'),
 		expressLayouts = require('express-ejs-layouts'),
 		app = express(),
+		bodyParser = require("body-parser"),
 		http = require('http').Server(app),
 		io = require('socket.io')(http),
 		port = process.env.PORT || 3000,
@@ -16,6 +17,7 @@ app.set('layout extractScripts', true)
 app.set('layout extractStyles', true)
 
 app.use(expressLayouts);
+app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 
 app.get('/', (req, res) => {
@@ -43,7 +45,6 @@ app.get('/settings', (req, res) => {
 
 app.post('/rest/addrecord', (req, res) => {
     console.log('Adding record');
-    console.log(req.data);
     console.log(req.body);
 
     res.write('OK');
