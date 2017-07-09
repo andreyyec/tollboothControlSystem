@@ -9,7 +9,7 @@ const Gpio = require('onoff').Gpio,
     stopLed = new Gpio(20, 'out'),
     goLed = new Gpio(21, 'out')
     closeCoordenate = 650,
-    openCoordenate = 1600,
+    openCoordenate = 1580,
     pSensorOutActivated = false,
     isOpen = false;
 

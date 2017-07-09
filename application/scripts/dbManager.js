@@ -1,39 +1,51 @@
 
 const MongoClient = require('mongodb').MongoClient;
 
+var self;
+
 class dbManager {
 
     setup(){
-        let that = this;
+        self = this;
 
         MongoClient.connect('mongodb://localhost:27017/tcsdb', (err, database) => {
             if (err) {
                 console.log('=> Debug => Database connection error');
                 return console.log(err);
             }
-            that.db = database;
+            self.db = database;
         });
     }
 
     getAllTrafficRecords() {
-        let collection = this.db.collection('trafficRecords');
-        // collection.find().forEach(function(record){ 
-        //     console.log(record._id);
-        // });
+        let collection = self.db.collection('trafficRecords');
 
         collection.find().toArray(function(err, results) {
             console.log(results);
-            // send HTML file populated with quotes here
         })
     }
 
     getTrafficRecordsCount() {
-        let collection = this.db.collection('trafficRecords');
+        let collection = self.db.collection('trafficRecords');
         return collection.count();
     }
 
     findAllCollectionRecords(collection) {
-        return this.db.collection(collection).find().toArray();
+        return self.db.collection(collection).find().toArray();
+    }
+
+    saveToDB(object){
+        console.log('Saving record to the database');
+        let collection = self.db.collection('tollboothRecords');
+
+        collection.insertOne(object,function(err, r) {
+            if (err === null) {
+                console.log('=>Debug: Record saved');
+            }else{
+                console.log('=>Debug: Error while trying to save record to Database');
+                console.log('=>Debug: Error:' + err);
+            }
+        });
     }
 
     constructor() {

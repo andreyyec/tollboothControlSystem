@@ -30,7 +30,6 @@ app.get('/', (req, res) => {
 	    	records: data
   		});
     });
-
 });
 
 app.get('/settings', (req, res) => {
@@ -40,6 +39,11 @@ app.get('/settings', (req, res) => {
 	    mainTitle: 'Settings',
 	    subTitle: '',
   	}); 
+});
+
+app.post('/rest/addrecord', (req, res) => {
+    console.log('Adding record');
+    console.log(req);
 });
 
 app.get('*', function(req, res){
