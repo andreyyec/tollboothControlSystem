@@ -43,7 +43,10 @@ app.get('/settings', (req, res) => {
 
 app.post('/rest/addrecord', (req, res) => {
     console.log('Adding record');
-    console.log(req);
+    console.log(req.data);
+    console.log(req.body);
+
+    res.write('OK');
 });
 
 app.get('*', function(req, res){
