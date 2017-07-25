@@ -28,15 +28,16 @@ app.get('/', (req, res) => {
     fareRequest.then(function(data) {
         fare = data[0].value;
 
-        recordsCountRequest.then(function(data) {
+        recordsCountRequest.then(function(count) {
         	console.log(data);
         	res.render('index', {
 				activeTab : 1,
 		    	tabTitle: 'Dashboard - TCSb',
 		    	mainTitle: 'Dashboard',
 		    	subTitle: 'Statistics Overview',
+		    	cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js'],
 		    	fare: fare,
-		    	recordsCount : data
+		    	recordsCount: count
   			});
         });
     });
@@ -53,13 +54,21 @@ app.get('/settings', (req, res) => {
 		    tabTitle: 'Settings - TCSb',
 		    mainTitle: 'Settings',
 		    subTitle: '',
-		    fare : fare
+		    cJSFiles: ['users.js', 'dt-manager.js'],
+		    fare: fare
 	  	}); 
     });
 });
 
+app.get('/rest/getUsers', (req, res) => {
+	let usersRequest = dbManager.getUsers();
+
+	usersRequest.then(function(data) {
+		res.json({"foo": "bar"});
+    });
+});
+
 app.post('/rest/addrecord', (req, res) => {
-	
 	let ctime = new Date(),
 		timeobj = {
 			fulldate: ctime,

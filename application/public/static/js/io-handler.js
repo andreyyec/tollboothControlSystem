@@ -2,7 +2,7 @@ $(function () {
     var scope, 
     socket = io(),
     body = $('body'),
-    socketManger = {
+    socketManager = {
     	updateDate: function () {
     		console.log('executing update');
     	},
@@ -18,5 +18,5 @@ $(function () {
     		}
     	}
     }
-    socketManger.init();
+    socketManager.init();
 });

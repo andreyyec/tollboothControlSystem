@@ -5,8 +5,8 @@ db.tollboothRecords.insert({"deviceUID":"200111z", "farePaid":"5", "fulldate": "
 db.devices.insert({UID:"200111z"});
 
 // Add system users
-db.users.insert({username:"acastro", password: "acastro"});
-db.users.insert({username:"elopez", password: "12345"});
+db.users.insert({name:"Andrey Castro", username:"acastro", password: "acastro", state: "active"});
+db.users.insert({name:"Erick Lopez", username:"elopez", password: "12345", state: "active"});
 
 //Add system fare over the settings collection
 db.settings.insert({type:"fare", value:"5"});
