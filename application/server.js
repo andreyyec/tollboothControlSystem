@@ -44,6 +44,19 @@ app.get('/settings', (req, res) => {
 });
 
 app.post('/rest/addrecord', (req, res) => {
+	
+	let ctime = new Date(),
+		timeobj = {
+			fulldate: ctime,
+			year: ctime.getFullYear(),
+			month: ctime.getMonth(),
+			day: ctime.getDate(),
+			hour: ctime.getHours(),
+        	minute: ctime.getMinutes(),
+        	seconds: ctime.getSeconds()
+		};
+
+	
     console.log('Adding record');
     console.log(req.body);
 

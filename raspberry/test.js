@@ -1,72 +1,17 @@
-/*Need to save into db
-	tollboothRecords
-		time
-		farePaid
-
-	settings
-		taxFare
-
-	users
-		name
-		username
-		password	
-*/
-
-/*class Test {
-
-	constructor() {
-
-	}
-
-	generateRecordObj() {
-		let currentTime = new Date(),
-			timeObject = self.generateTimeObj(currentTime),
-			dbObject = {
-
-			};
-
-
-	}
-
-	generateTimeObj(cTime) {
-        let obj = {
-            fulldate: cTime,
-            hour: cTime.getHours(),
-            minute: cTime.getMinutes(),
-            seconds: cTime.getSeconds()
-        };
-        return obj;
-    }
-
-    saveToDB(object) {
-        console.log('=>Debug: Saving record to the database');
-        let that = this,
-            collection = that.db.collection('tollBoothRecords');
-
-        collection.insertOne(object,function(err, r) {
-            if (err === null) {
-                console.log('=>Debug: Record saved');
-            }else{
-                console.log('=>Debug: Error while trying to save record to Database');
-                console.log('=>Debug: Error:' + err);
-            }
-        });
-    }
-}*/
-
-const request = require('request');
+const 	request = require('request'),
+		uid = '200111z';
 
 class Test {
 
 	constructor() {
-		this.sendData();
+		this.sendRequest();
 	}
 
-	sendData() {
-		request.post('http://localhost:3000/rest/addrecord', { json: { key: 'value' } },
+	sendRequest() {
+		request.post('http://localhost:3000/rest/addrecord', {json:{uid:uid}},
 		    function (error, response, body) {
 		    	console.log(body);
-		        if (!error && response.statusCode == 200) {
+		        if (!error && response.statusCeeode == 200) {
 		            console.log(body)
 		        }
 		    }
