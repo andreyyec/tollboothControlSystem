@@ -2,6 +2,8 @@ console.log('Executing npm start');
 
 const Gpio = require('onoff').Gpio,
     piGpio = require('pigpio').Gpio,
+    request = require('request'),
+    uid = '200111z',
     sMotor = new piGpio(18, {mode: Gpio.OUTPUT}),
     pSensorIn = new Gpio(4, 'in'),
     pSensorOut = new Gpio (22, 'in'),
@@ -48,6 +50,17 @@ class TollBoothController {
         clearInterval(iv);
     }
 
+    sendRequest() {
+        request.post('http://localhost:3000/rest/addrecord', {json:{uid:uid}},
+            function (error, response, body) {
+                console.log(body);
+                if (!error && response.statusCeeode == 200) {
+                    console.log(body)
+                }
+            }
+        );
+    }
+
     toggleIndicatorLeds() {
         if(isOpen) {
             goLed.writeSync(1);
@@ -83,6 +96,7 @@ class TollBoothController {
         if(self.isVehiclePresent(pSensorIn) && !isOpen && pButton.readSync()) {
             isOpen = true;
             self.toggleGate();
+            self.sendRequest();
         } else if(isOpen && self.isVehiclePresent(pSensorOut)) {
             pSensorOutActivated = true;
         } else if(isOpen && pSensorOutActivated === true && !self.isVehiclePresent(pSensorOut)) {
