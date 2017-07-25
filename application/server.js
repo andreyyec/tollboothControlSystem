@@ -43,12 +43,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/settings', (req, res) => {
-    res.render('settings', {
-    	activeTab : 2,
-	    tabTitle: 'Settings - TCSb',
-	    mainTitle: 'Settings',
-	    subTitle: '',
-  	}); 
+	let fareRequest = dbManager.getFare();
+
+	fareRequest.then(function(data) {
+        let fare = data[0].value;
+
+		res.render('settings', {
+	    	activeTab : 2,
+		    tabTitle: 'Settings - TCSb',
+		    mainTitle: 'Settings',
+		    subTitle: '',
+		    fare : fare
+	  	}); 
+    });
 });
 
 app.post('/rest/addrecord', (req, res) => {
