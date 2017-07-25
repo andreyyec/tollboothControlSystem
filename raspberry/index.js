@@ -3,6 +3,7 @@ console.log('Executing npm start');
 const Gpio = require('onoff').Gpio,
     piGpio = require('pigpio').Gpio,
     request = require('request'),
+    serverUrl = 'http://localhost:3000/rest/addrecord',
     uid = '200111z',
     sMotor = new piGpio(18, {mode: Gpio.OUTPUT}),
     pSensorIn = new Gpio(4, 'in'),
@@ -51,7 +52,7 @@ class TollBoothController {
     }
 
     sendRequest() {
-        request.post('http://localhost:3000/rest/addrecord', {json:{uid:uid}},
+        request.post(serverUrl, {json:{uid:uid}},
             function (error, response, body) {
                 console.log(body);
                 if (!error && response.statusCeeode == 200) {
