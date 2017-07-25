@@ -25,9 +25,12 @@ class dbManager {
         })
     }
 
-    getTrafficRecordsCount() {
-        let collection = self.db.collection('trafficRecords');
-        return collection.count();
+    getTollboothRecordsCount() {
+        return self.db.collection('tollboothRecords').count();
+    }
+
+    getFare() {
+        return self.db.collection('settings').find().toArray();
     }
 
     findAllCollectionRecords(collection) {

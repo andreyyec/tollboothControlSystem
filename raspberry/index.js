@@ -121,3 +121,19 @@ class TollBoothController {
 }
 
 let tbc = new TollBoothController();
+
+
+/*Need to save into db
+    tollboothRecords
+        time
+        farePaid
+
+    settings
+        taxFare
+        allowedDevices
+
+    users
+        name
+        username
+        password    
+*/

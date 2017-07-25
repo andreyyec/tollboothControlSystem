@@ -21,16 +21,24 @@ app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 
 app.get('/', (req, res) => {
-	let records = dbManager.getTrafficRecordsCount();
-    
-    records.then(function(data){
-        res.render('index', {
-			activeTab : 1,
-	    	tabTitle: 'Dashboard - TCSb',
-	    	mainTitle: 'Dashboard',
-	    	subTitle: 'Statistics Overview',
-	    	records: data
-  		});
+	let fareRequest = dbManager.getFare(),
+		recordsCountRequest = dbManager.getTollboothRecordsCount(),
+		fare, recordsCount;
+
+    fareRequest.then(function(data) {
+        fare = data[0].value;
+
+        recordsCountRequest.then(function(data) {
+        	console.log(data);
+        	res.render('index', {
+				activeTab : 1,
+		    	tabTitle: 'Dashboard - TCSb',
+		    	mainTitle: 'Dashboard',
+		    	subTitle: 'Statistics Overview',
+		    	fare: fare,
+		    	recordsCount : data
+  			});
+        });
     });
 });
 
@@ -56,7 +64,6 @@ app.post('/rest/addrecord', (req, res) => {
         	seconds: ctime.getSeconds()
 		};
 
-	
     console.log('Adding record');
     console.log(req.body);
 
