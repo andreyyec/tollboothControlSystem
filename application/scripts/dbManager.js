@@ -17,14 +17,6 @@ class dbManager {
         });
     }
 
-    getAllTrafficRecords() {
-        let collection = self.db.collection('trafficRecords');
-
-        collection.find().toArray(function(err, results) {
-            console.log(results);
-        })
-    }
-
     getTollboothRecordsCount() {
         return self.db.collection('tollboothRecords').count();
     }
@@ -33,11 +25,15 @@ class dbManager {
         return self.db.collection('settings').find().toArray();
     }
 
+    getUsers() {
+        return self.db.collection('users').find({},{password:false}).sort({x:-1}).limit(100).toArray();
+    }
+
     findAllCollectionRecords(collection) {
         return self.db.collection(collection).find().toArray();
     }
 
-    saveToDB(object){
+    saveToDB(object) {
         console.log('Saving record to the database');
         let collection = self.db.collection('tollboothRecords');
 
@@ -52,7 +48,6 @@ class dbManager {
     }
 
     constructor() {
-        console.log('Starting Database Manager');
         this.setup(); 
     }
 }

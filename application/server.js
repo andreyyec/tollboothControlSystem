@@ -60,11 +60,12 @@ app.get('/settings', (req, res) => {
     });
 });
 
-app.get('/rest/getUsers', (req, res) => {
+app.get('/rest/getusers', (req, res) => {
+	console.log('GetUsers Method Requested');
 	let usersRequest = dbManager.getUsers();
 
 	usersRequest.then(function(data) {
-		res.json({"foo": "bar"});
+		res.json({"data": data});
     });
 });
 
