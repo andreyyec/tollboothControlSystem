@@ -1,6 +1,5 @@
 $(function () {
     var scope, 
-    socket = io(),
     body = $('body'),
     usersManager = {
         processUserData: function(data) {

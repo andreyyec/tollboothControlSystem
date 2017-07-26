@@ -20,27 +20,42 @@ app.use(expressLayouts);
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 
+
+function sendCounter() {
+	let fareRequest = dbManager.getFare(),
+		recordsCountRequest = dbManager.getTollboothRecordsCount(),
+		cFare;
+
+    fareRequest.then(function(data) {
+        cFare = data[0].value;
+        recordsCountRequest.then(function(cCount) {
+        	io.emit('counterUpdate', {count: ccount, fare: cFare});
+        });
+    });
+}
+
 app.get('/', (req, res) => {
 	let fareRequest = dbManager.getFare(),
 		recordsCountRequest = dbManager.getTollboothRecordsCount(),
-		fare, recordsCount;
+		fare;
 
-    fareRequest.then(function(data) {
+    /*fareRequest.then(function(data) {
         fare = data[0].value;
 
         recordsCountRequest.then(function(count) {
-        	console.log(data);
+        	console.log(data);*/
         	res.render('index', {
 				activeTab : 1,
 		    	tabTitle: 'Dashboard - TCSb',
 		    	mainTitle: 'Dashboard',
 		    	subTitle: 'Statistics Overview',
-		    	cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js'],
-		    	fare: fare,
-		    	recordsCount: count
+		    	cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js']
+		    	//cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js'],
+		    	//fare: fare,
+		    	//recordsCount: count
   			});
-        });
-    });
+        /*});
+    });*/
 });
 
 app.get('/settings', (req, res) => {
@@ -54,7 +69,7 @@ app.get('/settings', (req, res) => {
 		    tabTitle: 'Settings - TCSb',
 		    mainTitle: 'Settings',
 		    subTitle: '',
-		    cJSFiles: ['users.js', 'dt-manager.js'],
+		    cJSFiles: ['settings.js'],
 		    fare: fare
 	  	}); 
     });
@@ -81,8 +96,7 @@ app.post('/rest/addrecord', (req, res) => {
         	seconds: ctime.getSeconds()
 		};
 
-    console.log('Adding record');
-    console.log(req.body);
+	sendCounter();
 
     res.write('OK');
 });
@@ -97,12 +111,9 @@ app.get('*', function(req, res){
 });
 
 io.on('connection', function(socket){
-  socket.on('mensaje', function(msg){
-  	console.log(msg);
-    io.emit('alertar', msg);
-  });
+  	sendCounter();
 });
 
 http.listen(port, function(){
-  console.log('listening on *:' + port);
+  	console.log('listening on *:' + port);
 });
