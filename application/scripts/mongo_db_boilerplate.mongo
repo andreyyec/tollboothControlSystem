@@ -10,3 +10,6 @@ db.users.insert({name:"Erick Lopez", username:"elopez", password: "12345", state
 
 //Add system fare over the settings collection
 db.settings.insert({type:"fare", value:"5"});
+
+//Update fare record
+db.settings.update({type: "fare"}, {type: "fare", value: "7"});

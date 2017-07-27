@@ -1,6 +1,8 @@
 $(function () {
     var scope, 
     body = $('body'),
+    updateFareBtn = body.find('.fare-update'),
+    updateFareField = body.find('.fare-input'),
     usersManager = {
         processUserData: function(data) {
             $.each(data, function( index, object ) {
@@ -24,8 +26,24 @@ $(function () {
             });
         },
     	attachListeners: function() {
-		    body.find('.update-fare').on('click', function() {
-                console.log('Update Request');
+            updateFareBtn.on('click', function() {
+                let nfare = updateFareField.val();
+                if($.isNumeric(nfare)) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:3000/rest/updatefare',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({fare: nfare}),
+                        success: function(data){
+                            console.log(data);
+                            alert(data.msj);
+                            //console.log(data.);
+                        }
+                    });
+                } else {
+                    alert('Invalid Fare value');
+                }
             });
     	},
     	init: function() {

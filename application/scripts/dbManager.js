@@ -25,6 +25,10 @@ class dbManager {
         return self.db.collection('settings').find().toArray();
     }
 
+    updateFare(nVal) {
+        return self.db.collection('settings').update({type: "fare"}, {type: "fare", value: nVal});
+    }
+
     getUsers() {
         return self.db.collection('users').find({},{password:false}).sort({x:-1}).limit(100).toArray();
     }
