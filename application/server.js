@@ -22,15 +22,18 @@ app.use('/public', express.static('public'));
 
 
 function sendCounter() {
-	let fareRequest = dbManager.getFare(),
-		recordsCountRequest = dbManager.getTollboothRecordsCount(),
-		cFare;
+	let recordsCountRequest = dbManager.getTollboothRecordsCount();
+
+    recordsCountRequest.then(function(count) {
+    	io.emit('counterUpdate', count);
+    });
+}
+
+function sendFare() {
+	let fareRequest = dbManager.getFare();
 
     fareRequest.then(function(data) {
-        cFare = data[0].value;
-        recordsCountRequest.then(function(cCount) {
-        	io.emit('counterUpdate', {count: ccount, fare: cFare});
-        });
+    	io.emit('fareUpdate', data[0].value);
     });
 }
 
@@ -49,7 +52,7 @@ app.get('/', (req, res) => {
 		    	tabTitle: 'Dashboard - TCSb',
 		    	mainTitle: 'Dashboard',
 		    	subTitle: 'Statistics Overview',
-		    	cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js']
+		    	jsfiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js']
 		    	//cJSFiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js'],
 		    	//fare: fare,
 		    	//recordsCount: count
@@ -69,7 +72,7 @@ app.get('/settings', (req, res) => {
 		    tabTitle: 'Settings - TCSb',
 		    mainTitle: 'Settings',
 		    subTitle: '',
-		    cJSFiles: ['settings.js'],
+		    jsfiles: ['settings.js'],
 		    fare: fare
 	  	}); 
     });
@@ -112,6 +115,7 @@ app.get('*', function(req, res){
 
 io.on('connection', function(socket){
   	sendCounter();
+  	sendFare();
 });
 
 http.listen(port, function(){

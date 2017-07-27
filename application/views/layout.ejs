@@ -105,8 +105,10 @@
     
 
     <!-- Custom JS files -->
-    <% for(var i=0; i < cJSFiles.length; i++) {%>
-        <script src="public/static/js/<%= cJSFiles[i] %>"></script>
+    <% if(locals.jsfiles !== undefined){ %>
+        <% for(var i=0; i < jsfiles.length; i++) {%>
+            <script src="public/static/js/<%= jsfiles[i] %>"></script>
+        <% } %>
     <% } %>
 
 </body>

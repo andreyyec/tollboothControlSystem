@@ -83,7 +83,7 @@ $(function() {
     // Line Chart
     Morris.Line({
         // ID of the element in which to draw the chart.
-        element: 'morris-line-chart-1',
+        element: 'morris-line-chart-cars',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [{
@@ -194,7 +194,7 @@ $(function() {
 
     Morris.Line({
         // ID of the element in which to draw the chart.
-        element: 'morris-line-chart-2',
+        element: 'morris-line-chart-fares',
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
         data: [{
