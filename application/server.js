@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
     	tabTitle: 'Dashboard - TCSb',
     	mainTitle: 'Dashboard',
     	subTitle: 'Statistics Overview',
-    	jsfiles: ['plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'plugins/morris/morris-data.js', 'io-handler.js']
+    	jsfiles: ['io-handler.js', 'plugins/morris/raphael.min.js', 'plugins/morris/morris.min.js', 'charts.js']
 	});
 });
 
@@ -89,16 +89,32 @@ app.post('/rest/addrecord', (req, res) => {
 });
 
 app.post('/rest/updatefare', (req, res) => {
-	let fareUpdate = dbManager.updateFare(req.body.fare);
+	let fareUpdateRequest = dbManager.updateFare(req.body.fare);
 
-	fareUpdate.then(function(data) {
-		if (data.CommandResult.result.nModified > 0) {
+	fareUpdateRequest.then(function(data) {
+		if (data.result.nModified > 0) {
+			io.emit('fareUpdate', req.body.fare);
 			res.status(200).end('{"status":200, "modified":true, "msj":"Updated Successfully"}');
 		} else {
 			res.status(200).end('{"status":500, "modified":false, "msj":"Error while trying to update fare value"}');
 		}
 	});
-});    
+});
+
+app.post('/rest/getchartdata', (req, res) => {
+	let chartDataRequest = dbManager.getChartInfo(req.body.type, req.body.limit);
+
+	// chartDataRequest.then(function(data) {
+	// 	if (data.result.nModified > 0) {
+	// 		io.emit('fareUpdate', req.body.fare);
+	// 		res.status(200).end('{"status":200, "modified":true, "msj":"Updated Successfully"}');
+	// 	} else {
+	// 		res.status(200).end('{"status":500, "modified":false, "msj":"Error while trying to update fare value"}');
+	// 	}
+	// });
+
+	res.status(200).end('{"status":200, "modified":true, "msj":"Rest service working"}');
+}); 
 
 app.get('*', function(req, res){
    	res.render('404', {

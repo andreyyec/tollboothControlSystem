@@ -48,10 +48,8 @@ $(function () {
     	},
     	init: function() {
     		scope = this;
-    		if (body.find('.content-container.settings').length > 0) {
-                scope.requestUsers();
-    			scope.attachListeners();
-    		}
+            scope.requestUsers();
+			scope.attachListeners();
     	}
     }
     usersManager.init();

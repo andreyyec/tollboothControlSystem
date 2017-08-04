@@ -25,30 +25,18 @@ class dbManager {
         return self.db.collection('settings').find().toArray();
     }
 
-    updateFare(nVal) {
-        return self.db.collection('settings').update({type: "fare"}, {type: "fare", value: nVal});
-    }
-
     getUsers() {
         return self.db.collection('users').find({},{password:false}).sort({x:-1}).limit(100).toArray();
     }
 
-    findAllCollectionRecords(collection) {
-        return self.db.collection(collection).find().toArray();
+    getChartInfo(type, limit) {
+        console.log('type:' + type);
+        console.log('limit:' + limit);
+        //return self.db.collection('tollboothRecords').find({}).toArray();
     }
 
-    saveToDB(object) {
-        console.log('Saving record to the database');
-        let collection = self.db.collection('tollboothRecords');
-
-        collection.insertOne(object,function(err, r) {
-            if (err === null) {
-                console.log('=>Debug: Record saved');
-            }else{
-                console.log('=>Debug: Error while trying to save record to Database');
-                console.log('=>Debug: Error:' + err);
-            }
-        });
+    updateFare(nVal) {
+        return self.db.collection('settings').update({type: "fare"}, {type: "fare", value: nVal});
     }
 
     constructor() {
