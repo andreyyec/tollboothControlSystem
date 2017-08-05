@@ -30,9 +30,33 @@ class dbManager {
     }
 
     getChartInfo(type, limit) {
-        console.log('type:' + type);
-        console.log('limit:' + limit);
-        //return self.db.collection('tollboothRecords').find({}).toArray();
+        let sTime, eTime,
+            currentDate = new Date;
+
+        switch (limit) {
+            case 'day':
+                sTime = currentDate.setHours(0,0,0,0);
+                eTime = currentDate.setHours(23,59,59,999);
+            break;
+            case 'week':
+                sTime = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay())).setHours(0,0,0,0);
+                eTime = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()+6)).setHours(23,59,59,999);
+            break;
+            case 'month':
+                sTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).setHours(0,0,0,0);
+                eTime = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).setHours(23,59,59,999);
+            break;
+            case 'year':
+                sTime = new Date(currentDate.getFullYear(), 0, 1).setHours(0,0,0,0);
+                eTime = new Date(currentDate.getFullYear(), 11, 31).setHours(23,59,59,999);;
+            break;
+        }
+
+        if (type === 'fare' || type === 'count') {
+            return self.db.collection('tollboothRecords').find({ startTime: { $gte: sTime, $lt: eTime}}).toArray();
+        } else {
+            return {status: 'error'};
+        }        
     }
 
     updateFare(nVal) {
