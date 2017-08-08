@@ -1,6 +1,5 @@
 $(function () {
     var scope,
-    appUrl = 'http://localhost:3000',
     body = $('body'),
     updateFareBtn = body.find('.fare-update'),
     updateFareField = body.find('.fare-input'),
@@ -15,7 +14,7 @@ $(function () {
             return data;
         },
         requestUsers: function() {
-            $.get( "http://localhost:3000/rest/getusers", function( json ) {
+            $.get( "/rest/getusers", function( json ) {
                 var users = scope.processUserData(json.data);
 
                 $('#userstable').DataTable( {
@@ -32,7 +31,7 @@ $(function () {
         deleteUser: function() {
             $.ajax({
                 type: 'POST',
-                url: appUrl+'/rest/deleteuser',
+                url: '/rest/deleteuser',
                 contentType: 'application/json',
                 dataType: 'json',
                 data: JSON.stringify({fare: nfare}),
@@ -47,7 +46,7 @@ $(function () {
                 if($.isNumeric(nfare)) {
                     $.ajax({
                         type: 'POST',
-                        url: appUrl+'/rest/updatefare',
+                        url: '/rest/updatefare',
                         contentType: 'application/json',
                         dataType: 'json',
                         data: JSON.stringify({fare: nfare}),

@@ -1,8 +1,7 @@
 $(function () {
     var scope,
-    appUrl = 'http://localhost:3000',
     body = $('body'),
-    baseUrl = appUrl+'/rest/getchartdata',
+    baseUrl = '/rest/getchartdata',
     chartsManager = {
         loadChartData: function(ctype, climit, callback) {  //Types: count, fare; limit: day, week, month, year
             $.ajax({
