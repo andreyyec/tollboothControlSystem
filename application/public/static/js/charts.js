@@ -1,6 +1,6 @@
 $(function () {
     var scope,
-    appUrl: 'http://localhost:3000',
+    appUrl = 'http://localhost:3000',
     body = $('body'),
     baseUrl = appUrl+'/rest/getchartdata',
     chartsManager = {
