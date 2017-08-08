@@ -5,7 +5,7 @@ $(function () {
     updateFareField = body.find('.fare-input'),
     updateModal = body.find('#updateModal'),
     deleteModal = body.find('#deleteModal'),
-    deleteModalUserTag = deleteModal.find('.usernames'),
+    deleteModalUserTag = deleteModal.find('.username'),
     usersManager = {
         processUserData: function(data) {
             $.each(data, function( index, object ) {
@@ -70,7 +70,8 @@ $(function () {
             body.on('click', '.delete-user',function(e) {
                 let test = $(e.target).parent().closest('tr').find('td:nth-child(2)').text();
                 console.log(test);
-                deleteModalUserTag.text(test); 
+                console.log(deleteModalUserTag);
+                deleteModalUserTag.html(test); 
                 deleteModal.modal('show');
             });
     	},

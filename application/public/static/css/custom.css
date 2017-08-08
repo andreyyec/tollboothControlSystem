@@ -3,7 +3,11 @@ body .content-container.dashboard {
 }
 
 body .content-container.settings .btn.update-fare {
-	margin-top: 10px;
+    margin-top: 10px;
+}
+
+body .content-container.settings span.strong.username {
+    font-weight: bold;
 }
 
 /*!
