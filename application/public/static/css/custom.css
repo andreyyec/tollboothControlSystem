@@ -10,6 +10,10 @@ body .content-container.settings span.strong.username {
     font-weight: bold;
 }
 
+.panel-heading {
+  padding: 10px 28px;
+}
+
 /*!
  * Bootstrap Responsive v2.3.2
  *

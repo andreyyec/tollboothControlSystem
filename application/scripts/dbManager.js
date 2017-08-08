@@ -67,6 +67,10 @@ class dbManager {
         return self.db.collection('settings').update({type: "fare"}, {type: "fare", value: nVal});
     }
 
+    saveTollboothRecord (storeObj) {
+        return self.db.collection('tollboothRecords').insert(storeObj);
+    }
+
     constructor() {
         this.setup(); 
     }

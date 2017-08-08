@@ -72,7 +72,9 @@ app.get('/rest/getusers', (req, res) => {
 
 app.post('/rest/addrecord', (req, res) => {
 	let ctime = new Date(),
-		timeobj = {
+		storeObj = {
+			deviceUID: req.body.uid,
+			farePaid : 0,
 			fulldate: ctime,
 			year: ctime.getFullYear(),
 			month: ctime.getMonth(),
@@ -80,9 +82,19 @@ app.post('/rest/addrecord', (req, res) => {
 			hour: ctime.getHours(),
         	minute: ctime.getMinutes(),
         	seconds: ctime.getSeconds()
-		};
+			
+		},
+		fareRequest = dbManager.getFare();
 
-	sendCounter();
+    fareRequest.then(function(data) {
+    	storeObj.farePaid = data[0].value;
+
+    	let tollboothSaveRequest = dbManager.saveTollboothRecord(storeObj);
+    	
+    	tollboothSaveRequest.then(function(data) {
+			sendCounter();
+		});
+    });
 
     res.write('OK');
     res.status(200).end();

@@ -1,5 +1,6 @@
 $(function () {
-    var scope, 
+    var scope,
+    appUrl = 'http://localhost:3000',
     body = $('body'),
     updateFareBtn = body.find('.fare-update'),
     updateFareField = body.find('.fare-input'),
@@ -31,12 +32,11 @@ $(function () {
         deleteUser: function() {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:3000/rest/deleteuser',
+                url: appUrl+'/rest/deleteuser',
                 contentType: 'application/json',
                 dataType: 'json',
                 data: JSON.stringify({fare: nfare}),
                 success: function(data){
-                    console.log(data);
                     alert(data.msj);
                 }
             });
@@ -47,12 +47,11 @@ $(function () {
                 if($.isNumeric(nfare)) {
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:3000/rest/updatefare',
+                        url: appUrl+'/rest/updatefare',
                         contentType: 'application/json',
                         dataType: 'json',
                         data: JSON.stringify({fare: nfare}),
                         success: function(data){
-                            console.log(data);
                             alert(data.msj);
                         }
                     });
@@ -62,15 +61,11 @@ $(function () {
             });
 
             body.on('click', '.update-user',function(e) {
-                console.log($(e.target).parent().closest('tr')/*.find('td:first-child')*/);
-                deleteModalUserTag.text();
                 updateModal.modal('show');
             });
             
             body.on('click', '.delete-user',function(e) {
                 let test = $(e.target).parent().closest('tr').find('td:nth-child(2)').text();
-                console.log(test);
-                console.log(deleteModalUserTag);
                 deleteModalUserTag.html(test); 
                 deleteModal.modal('show');
             });

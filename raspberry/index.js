@@ -1,9 +1,10 @@
 console.log('Executing npm start');
 
-const Gpio = require('onoff').Gpio,
+const appUrl = 'http://localhost:3000',
+    Gpio = require('onoff').Gpio,
     piGpio = require('pigpio').Gpio,
     request = require('request'),
-    serverUrl = 'http://localhost:3000/rest/addrecord',
+    serverUrl = appUrl+'/rest/addrecord',
     uid = '200111z',
     sMotor = new piGpio(18, {mode: Gpio.OUTPUT}),
     pSensorIn = new Gpio(4, 'in'),
@@ -54,9 +55,8 @@ class TollBoothController {
     sendRequest() {
         request.post(serverUrl, {json:{uid:uid}},
             function (error, response, body) {
-                console.log(body);
                 if (!error && response.statusCeeode == 200) {
-                    console.log(body)
+                    console.log(body);
                 }
             }
         );
@@ -121,19 +121,3 @@ class TollBoothController {
 }
 
 let tbc = new TollBoothController();
-
-
-/*Need to save into db
-    tollboothRecords
-        time
-        farePaid
-
-    settings
-        taxFare
-        allowedDevices
-
-    users
-        name
-        username
-        password    
-*/
