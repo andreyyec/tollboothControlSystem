@@ -3,6 +3,9 @@ $(function () {
     body = $('body'),
     updateFareBtn = body.find('.fare-update'),
     updateFareField = body.find('.fare-input'),
+    updateModal = body.find('#updateModal'),
+    deleteModal = body.find('#deleteModal'),
+    deleteModalUserTag = deleteModal.find('.usernames'),
     usersManager = {
         processUserData: function(data) {
             $.each(data, function( index, object ) {
@@ -25,6 +28,19 @@ $(function () {
                 });
             });
         },
+        deleteUser: function() {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/rest/deleteuser',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({fare: nfare}),
+                success: function(data){
+                    console.log(data);
+                    alert(data.msj);
+                }
+            });
+        },
     	attachListeners: function() {
             updateFareBtn.on('click', function() {
                 let nfare = updateFareField.val();
@@ -38,12 +54,24 @@ $(function () {
                         success: function(data){
                             console.log(data);
                             alert(data.msj);
-                            //console.log(data.);
                         }
                     });
                 } else {
                     alert('Invalid Fare value');
                 }
+            });
+
+            body.on('click', '.update-user',function(e) {
+                console.log($(e.target).parent().closest('tr')/*.find('td:first-child')*/);
+                deleteModalUserTag.text();
+                updateModal.modal('show');
+            });
+            
+            body.on('click', '.delete-user',function(e) {
+                let test = $(e.target).parent().closest('tr').find('td:nth-child(2)').text();
+                console.log(test);
+                deleteModalUserTag.text(test); 
+                deleteModal.modal('show');
             });
     	},
     	init: function() {

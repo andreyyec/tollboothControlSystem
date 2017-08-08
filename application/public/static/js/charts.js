@@ -3,7 +3,7 @@ $(function () {
     body = $('body'),
     baseUrl = 'http://localhost:3000/rest/getchartdata',
     chartsManager = {
-        loadChartData: function(ctype, climit, callback) {  //Types: count, fare; limit: day, week, month, year 
+        loadChartData: function(ctype, climit, callback) {  //Types: count, fare; limit: day, week, month, year
             $.ajax({
                 type: 'POST',
                 url: baseUrl,

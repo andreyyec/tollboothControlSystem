@@ -17,6 +17,10 @@ class dbManager {
         });
     }
 
+    deleteUser(userid) {
+        return self.db.collection('users').deleteOne({'_id':ObjectId(userid)});
+    }
+
     getTollboothRecordsCount() {
         return self.db.collection('tollboothRecords').count();
     }
